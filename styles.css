@@ -205,6 +205,7 @@ body {
     color: #57606f;
     margin-bottom: 20px;
     font-weight: 500;
+}
 
 .setup-mode-section h2, .settings-group h3 {
     font-family: var(--font-heading);
