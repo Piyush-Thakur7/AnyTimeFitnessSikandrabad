@@ -7,6 +7,9 @@ const LudoDice = (() => {
     let btn = null;
     let cube = null;
     let rolling = false;
+    let currentSpinsX = 0;
+    let currentSpinsY = 0;
+    let currentSpinsZ = 0;
 
     function getFaceRotation(value) {
         switch (value) {
@@ -46,14 +49,18 @@ const LudoDice = (() => {
             if (window.LudoSounds) LudoSounds.playDiceRoll();
 
             const rot = getFaceRotation(value);
-            // Dynamic random rotations for smooth continuous roll
+            // Accumulate spins continuously so values always increase
             const spinsX = (Math.floor(Math.random() * 3) + 3) * 360;
             const spinsY = (Math.floor(Math.random() * 3) + 3) * 360;
             const spinsZ = (Math.floor(Math.random() * 2) + 1) * 360;
 
+            currentSpinsX += spinsX;
+            currentSpinsY += spinsY;
+            currentSpinsZ += spinsZ;
+
             // Trigger smooth transition
             cube.style.transition = 'transform 0.9s cubic-bezier(0.18, 0.89, 0.32, 1.28)';
-            cube.style.transform = `rotateX(${rot.x + spinsX}deg) rotateY(${rot.y + spinsY}deg) rotateZ(${spinsZ}deg)`;
+            cube.style.transform = `rotateX(${currentSpinsX + rot.x}deg) rotateY(${currentSpinsY + rot.y}deg) rotateZ(${currentSpinsZ}deg)`;
 
             // Wait for transition to finish
             setTimeout(() => {
@@ -65,6 +72,9 @@ const LudoDice = (() => {
         /** Set dice face without animation */
         setValue(value) {
             if (!cube) return;
+            currentSpinsX = 0;
+            currentSpinsY = 0;
+            currentSpinsZ = 0;
             const rot = getFaceRotation(value);
             cube.style.transition = 'none';
             cube.style.transform = `rotateX(${rot.x}deg) rotateY(${rot.y}deg) rotateZ(0deg)`;
