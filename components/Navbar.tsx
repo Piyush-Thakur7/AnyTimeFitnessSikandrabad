@@ -46,7 +46,7 @@ export default function Navbar() {
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-slate-200/80 bg-white/80 backdrop-blur-md transition-all dark:border-slate-800/80 dark:bg-slate-950/80">
-      <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
+      <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-2.5 sm:px-6 lg:px-8">
         {/* Logo Wordmark */}
         <Link href="/">
           <Logo />
@@ -73,7 +73,7 @@ export default function Navbar() {
         </nav>
 
         {/* Action Controls */}
-        <div className="flex items-center space-x-4">
+        <div className="flex items-center space-x-1.5 sm:space-x-4">
           {/* Light/Dark Toggle */}
           <button
             onClick={toggleTheme}
