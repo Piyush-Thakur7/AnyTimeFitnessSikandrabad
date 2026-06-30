@@ -5,13 +5,17 @@
   --foreground: #0f172a;
   --card: #ffffff;
   --card-border: #e2e8f0;
+  
+  --primary-glow: radial-gradient(circle, rgba(139, 92, 246, 0.15) 0%, rgba(236, 72, 153, 0.05) 50%, transparent 100%);
 }
 
 .dark {
-  --background: #030712;
-  --foreground: #f9fafb;
-  --card: #090d16;
-  --card-border: #1e293b;
+  --background: #040712; /* Deep space slate */
+  --foreground: #f8fafc;
+  --card: #090e1a;
+  --card-border: #131b2e;
+  
+  --primary-glow: radial-gradient(circle, rgba(139, 92, 246, 0.25) 0%, rgba(236, 72, 153, 0.08) 50%, transparent 100%);
 }
 
 @theme inline {
@@ -23,13 +27,90 @@
   --font-mono: var(--font-geist-mono);
 }
 
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+  position: relative;
+  overflow-x: hidden;
+}
+
+/* Background Cyber Grid Pattern */
+.cyber-grid {
+  background-size: 40px 40px;
+  background-image: 
+    linear-gradient(to right, rgba(148, 163, 184, 0.03) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(148, 163, 184, 0.03) 1px, transparent 1px);
+}
+.dark .cyber-grid {
+  background-image: 
+    linear-gradient(to right, rgba(30, 41, 59, 0.4) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(30, 41, 59, 0.4) 1px, transparent 1px);
+}
+
+/* Glowing Neon Background Blobs */
+.neon-glow-blob {
+  position: absolute;
+  width: 600px;
+  height: 600px;
+  background: var(--primary-glow);
+  filter: blur(80px);
+  pointer-events: none;
+  z-index: 0;
+  border-radius: 50%;
+}
+
+/* Premium Gaming Cards with Glassmorphism */
+.gaming-card {
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(226, 232, 240, 0.8);
+  box-shadow: 0 4px 20px -2px rgba(148, 163, 184, 0.12);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.dark .gaming-card {
+  background: rgba(9, 14, 26, 0.7);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(19, 27, 46, 0.8);
+  box-shadow: 0 4px 30px -4px rgba(0, 0, 0, 0.4);
+}
+
+/* Neon Borders & Glow on Hover */
+.neon-hover-purple:hover {
+  border-color: rgba(168, 85, 247, 0.6);
+  box-shadow: 0 0 20px rgba(168, 85, 247, 0.25);
+  transform: translateY(-2px);
+}
+
+.neon-hover-orange:hover {
+  border-color: rgba(249, 115, 22, 0.6);
+  box-shadow: 0 0 20px rgba(249, 115, 22, 0.25);
+  transform: translateY(-2px);
+}
+
+.neon-hover-gold:hover {
+  border-color: rgba(245, 158, 11, 0.6);
+  box-shadow: 0 0 20px rgba(245, 158, 11, 0.25);
+  transform: translateY(-2px);
+}
+
+/* Animations */
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(8px); }
+  from { opacity: 0; transform: translateY(12px); }
   to { opacity: 1; transform: translateY(0); }
 }
 
 .animate-fadeIn {
-  animation: fadeIn 0.4s ease-out forwards;
+  animation: fadeIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes pulseGlow {
+  0%, 100% { opacity: 0.8; }
+  50% { opacity: 1; filter: drop-shadow(0 0 12px rgba(139, 92, 246, 0.8)); }
+}
+
+.animate-pulseGlow {
+  animation: pulseGlow 2s infinite ease-in-out;
 }
 
 /* Custom scrollbar hides */
@@ -41,3 +122,8 @@
   scrollbar-width: none;
 }
 
+/* Circular Character Counter Ring Styles */
+.circular-progress {
+  transform: rotate(-90deg);
+  transform-origin: 50% 50%;
+}

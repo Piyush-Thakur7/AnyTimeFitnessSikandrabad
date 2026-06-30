@@ -31,9 +31,13 @@ export default function RootLayout({
       lang="en"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col bg-slate-50 text-slate-900 transition-colors duration-300 dark:bg-slate-950 dark:text-slate-100">
+      <body className="min-h-full flex flex-col bg-slate-50 text-slate-900 transition-colors duration-300 dark:bg-slate-950 dark:text-slate-100 cyber-grid relative">
+        {/* Ambient Neon Glows */}
+        <div className="neon-glow-blob top-[-150px] left-[-150px] opacity-60 dark:opacity-100" />
+        <div className="neon-glow-blob top-[40%] right-[-150px] opacity-40 dark:opacity-60" />
+        
         <Navbar />
-        <main className="flex-grow flex flex-col justify-start">
+        <main className="flex-grow flex flex-col justify-start relative z-10">
           {children}
         </main>
         <Footer />

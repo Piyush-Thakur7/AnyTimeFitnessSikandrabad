@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useEffect, useRef } from 'react';
-import { INVISIBLE_CHARS, InvisibleChar } from '../lib/invisibleChars';
+import { INVISIBLE_CHARS } from '../lib/invisibleChars';
 
 export default function InvisibleCharTool() {
   const [copiedId, setCopiedId] = useState<string | null>(null);
@@ -65,11 +65,9 @@ export default function InvisibleCharTool() {
     }
   };
 
-  // Find the currently selected invisible character
   const selectedCharObj = INVISIBLE_CHARS.find(c => c.id === selectedCharId) || INVISIBLE_CHARS[0];
   const combinedResult = `${word1}${selectedCharObj.char}${word2}`;
   
-  // Length calculations handling surrogate pairs
   const combinedLength = Array.from(combinedResult).length;
 
   return (
@@ -82,59 +80,61 @@ export default function InvisibleCharTool() {
       )}
 
       {/* Explainer Section */}
-      <div className="rounded-3xl border border-slate-200/80 bg-white p-6 shadow-md dark:border-slate-800/80 dark:bg-slate-900 dark:shadow-none">
-        <h2 className="text-xl font-extrabold text-slate-800 dark:text-slate-100 mb-4">
-          🤔 Why Do Games Block Normal Spaces?
+      <div className="gaming-card rounded-3xl p-6 relative overflow-hidden">
+        <div className="absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-cyan-500 to-blue-500" />
+        <h2 className="text-lg font-black text-slate-850 dark:text-slate-100 mb-4 flex items-center space-x-2">
+          <span>❓ WHY DO MOBILE GAMES BLOCK STANDARD SPACES?</span>
         </h2>
-        <div className="text-sm text-slate-600 dark:text-slate-400 space-y-3 leading-relaxed">
+        <div className="text-sm text-slate-500 dark:text-slate-400 space-y-3 leading-relaxed">
           <p>
-            When you type a standard space using your keyboard spacebar, popular games like <span className="font-semibold text-orange-500">Free Fire</span> and <span className="font-semibold text-amber-500">BGMI (Battlegrounds Mobile India)</span> automatically strip it out. They do this to keep game database indexes clean and avoid formatting exploits.
+            Standard keyboard spaces are automatically removed by games like <span className="font-bold text-orange-500">Free Fire</span> and <span className="font-bold text-amber-500">BGMI</span> to enforce character boundaries and prevent blank username exploits. 
           </p>
           <p>
-            To bypass this restriction, players use <span className="font-semibold text-violet-500 dark:text-violet-400">Invisible Unicode characters</span>. These characters behave like letters (so the game database accepts them), but they display absolutely nothing on the screen. By pasting these in place of a space, you can create clean, spaced-out, or completely blank names!
+            By using special <span className="font-bold text-violet-500 dark:text-violet-400">Unicode spacing codes</span>, you can bypass these spacebar filters. These characters represent blank glyphs that are recognized by games as alphabetical letters, resulting in an invisible spacing effect.
           </p>
         </div>
       </div>
 
-      {/* Spacing Widget */}
-      <div className="rounded-3xl border border-slate-200/80 bg-slate-50/50 p-6 dark:border-slate-800/80 dark:bg-slate-900/40">
-        <h2 className="text-lg font-bold text-slate-800 dark:text-slate-100 mb-6">
-          🛠️ Name Spacing Creator Widget
+      {/* Spacing Creator Widget */}
+      <div className="gaming-card rounded-3xl p-6 relative overflow-hidden">
+        <div className="absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-violet-500 to-fuchsia-500" />
+        <h2 className="text-xs font-black uppercase tracking-widest text-slate-400 dark:text-slate-500 mb-6 flex items-center space-x-1.5">
+          <span>🛠️ INTERACTIVE INVISIBLE NICKNAME BUILDER</span>
         </h2>
         
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-stretch">
           <div className="space-y-4">
             <div className="grid grid-cols-2 gap-3">
               {/* Word 1 */}
               <div className="flex flex-col space-y-1.5">
-                <label className="text-xs font-bold text-slate-400 dark:text-slate-500 uppercase">First Word</label>
+                <label className="text-[10px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-wider">First Segment</label>
                 <input
                   type="text"
                   value={word1}
                   onChange={(e) => setWord1(e.target.value)}
-                  className="rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm font-semibold outline-none focus:border-violet-500 dark:border-slate-800 dark:bg-slate-900 dark:text-slate-200"
+                  className="rounded-xl border border-slate-200 bg-slate-50/50 px-4 py-3 text-sm font-bold outline-none focus:border-violet-500 dark:border-slate-800 dark:bg-slate-950/60 dark:text-slate-100"
                 />
               </div>
 
               {/* Word 2 */}
               <div className="flex flex-col space-y-1.5">
-                <label className="text-xs font-bold text-slate-400 dark:text-slate-500 uppercase">Second Word</label>
+                <label className="text-[10px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-wider">Second Segment</label>
                 <input
                   type="text"
                   value={word2}
                   onChange={(e) => setWord2(e.target.value)}
-                  className="rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm font-semibold outline-none focus:border-violet-500 dark:border-slate-800 dark:bg-slate-900 dark:text-slate-200"
+                  className="rounded-xl border border-slate-200 bg-slate-50/50 px-4 py-3 text-sm font-bold outline-none focus:border-violet-500 dark:border-slate-800 dark:bg-slate-950/60 dark:text-slate-100"
                 />
               </div>
             </div>
 
-            {/* Separator Character Selection */}
+            {/* Spacer Selection */}
             <div className="flex flex-col space-y-1.5">
-              <label className="text-xs font-bold text-slate-400 dark:text-slate-500 uppercase">Select Invisible Spacer</label>
+              <label className="text-[10px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-wider">Invisible Spacer Type</label>
               <select
                 value={selectedCharId}
                 onChange={(e) => setSelectedCharId(e.target.value)}
-                className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm font-semibold text-slate-700 outline-none focus:border-violet-500 dark:border-slate-800 dark:bg-slate-900 dark:text-slate-200"
+                className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm font-bold text-slate-700 outline-none focus:border-violet-500 dark:border-slate-800 dark:bg-slate-900 dark:text-slate-200 cursor-pointer"
               >
                 {INVISIBLE_CHARS.map((char) => (
                   <option key={char.id} value={char.id}>
@@ -145,35 +145,35 @@ export default function InvisibleCharTool() {
             </div>
           </div>
 
-          {/* Result Card */}
-          <div className="flex flex-col justify-between rounded-2xl border border-violet-250 bg-violet-50/20 p-5 dark:border-violet-950/40 dark:bg-violet-950/5">
+          {/* Sandbox Combined Result Display */}
+          <div className="rounded-2xl border border-violet-200 bg-violet-50/15 p-5 dark:border-slate-800 dark:bg-slate-950/40 flex flex-col justify-between">
             <div>
-              <div className="flex items-center justify-between mb-2">
-                <span className="text-xs font-bold uppercase tracking-wider text-violet-600 dark:text-violet-400">
-                  Combined Preview
+              <div className="flex items-center justify-between mb-3">
+                <span className="text-[10px] font-black uppercase tracking-wider text-violet-600 dark:text-violet-400">
+                  Interactive Result Sandbox
                 </span>
-                <span className="text-xs font-semibold text-slate-400 dark:text-slate-500">
-                  Length: <span className="font-bold text-slate-600 dark:text-slate-300">{combinedLength}</span> chars
+                <span className="text-[11px] font-bold text-slate-550 dark:text-slate-400">
+                  Length: <span className="font-extrabold text-violet-500">{combinedLength}</span> characters
                 </span>
               </div>
               
-              <div className="rounded-xl bg-white border border-slate-200 p-4 text-center font-mono text-xl font-bold select-all dark:bg-slate-950 dark:border-slate-850 dark:text-slate-100">
+              <div className="rounded-xl bg-white border border-slate-200 dark:bg-slate-900 dark:border-slate-800 p-4 text-center font-mono text-xl font-bold select-all text-slate-800 dark:text-slate-100">
                 {combinedResult}
               </div>
-              <p className="text-[11px] text-slate-400 dark:text-slate-500 mt-2 text-center">
-                *The blank gap between letters is the invisible code.
+              <p className="text-[10px] text-slate-400 dark:text-slate-500 mt-2.5 text-center font-semibold">
+                *Copy and paste directly into the in-game profile nickname prompt.
               </p>
             </div>
 
             <button
               onClick={() => handleCopy(combinedResult, 'combined', true)}
-              className={`w-full mt-4 rounded-xl py-3 text-sm font-bold transition-all shadow-md ${
+              className={`w-full mt-4 rounded-xl py-3 text-xs font-black uppercase tracking-wider transition-all shadow-md cursor-pointer ${
                 isCombinedCopied
-                  ? 'bg-emerald-500 text-white'
+                  ? 'bg-emerald-500 text-white shadow-emerald-500/10'
                   : 'bg-violet-600 text-white hover:bg-violet-750'
               }`}
             >
-              {isCombinedCopied ? '✓ Copied Combined Result' : 'Copy Combined Result'}
+              {isCombinedCopied ? '✓ Copied Combined Result' : 'Copy Nickname Code'}
             </button>
           </div>
         </div>
@@ -181,60 +181,59 @@ export default function InvisibleCharTool() {
 
       {/* Curated List of Characters */}
       <div className="space-y-6">
-        <h2 className="text-lg font-bold text-slate-800 dark:text-slate-100">
-          📋 Curated Invisible Unicode Characters
+        <h2 className="text-xs font-black uppercase tracking-widest text-slate-400 dark:text-slate-500">
+          📋 CURATED INVISIBLE CHARACTER DIRECTORY
         </h2>
 
-        <div className="grid grid-cols-1 gap-6">
+        <div className="grid grid-cols-1 gap-4">
           {INVISIBLE_CHARS.map((char) => {
             const isCopied = copiedId === char.id;
             return (
               <div 
                 key={char.id}
-                className="flex flex-col md:flex-row md:items-center justify-between gap-6 rounded-2xl border border-slate-200/80 bg-white p-6 shadow-sm dark:border-slate-800/80 dark:bg-slate-900"
+                className="gaming-card rounded-2xl p-6 flex flex-col md:flex-row md:items-center justify-between gap-6 hover:scale-[1.005] neon-hover-purple"
               >
                 <div className="space-y-3 max-w-xl">
                   <div className="flex flex-wrap items-center gap-2">
-                    <h3 className="text-base font-extrabold text-slate-850 dark:text-slate-150">
+                    <h3 className="text-base font-black text-slate-800 dark:text-slate-100">
                       {char.name}
                     </h3>
-                    <span className="rounded-lg bg-slate-100 px-2 py-0.5 font-mono text-xs font-bold text-slate-600 dark:bg-slate-800 dark:text-slate-400">
+                    <span className="rounded-lg bg-slate-100 px-2 py-0.5 font-mono text-xs font-bold text-slate-650 dark:bg-slate-850 dark:text-slate-400">
                       {char.unicode}
                     </span>
                   </div>
                   
-                  <p className="text-sm text-slate-500 dark:text-slate-400 leading-relaxed">
+                  <p className="text-sm text-slate-505 dark:text-slate-400 leading-relaxed">
                     {char.description}
                   </p>
 
                   {/* Compatibility notes table */}
-                  <div className="grid grid-cols-2 gap-3 pt-1.5 border-t border-slate-150/40 dark:border-slate-800/50 text-xs">
+                  <div className="grid grid-cols-2 gap-4 pt-3 border-t border-slate-100 dark:border-slate-850 text-xs">
                     <div>
-                      <span className="block font-bold text-orange-500 uppercase tracking-wide text-[10px]">Free Fire</span>
-                      <span className="text-slate-600 dark:text-slate-400">{char.ffCompatibility}</span>
+                      <span className="block font-black text-orange-500 uppercase tracking-widest text-[9px] mb-0.5">Free Fire Compatibility</span>
+                      <span className="text-slate-500 dark:text-slate-400 leading-normal">{char.ffCompatibility}</span>
                     </div>
                     <div>
-                      <span className="block font-bold text-amber-500 uppercase tracking-wide text-[10px]">BGMI</span>
-                      <span className="text-slate-600 dark:text-slate-400">{char.bgmiCompatibility}</span>
+                      <span className="block font-black text-amber-500 uppercase tracking-widest text-[9px] mb-0.5">BGMI Compatibility</span>
+                      <span className="text-slate-500 dark:text-slate-400 leading-normal">{char.bgmiCompatibility}</span>
                     </div>
                   </div>
                 </div>
 
                 <div className="flex flex-col space-y-2 justify-center items-stretch md:w-44 flex-shrink-0">
-                  {/* Invisible character sandbox display box */}
-                  <div className="rounded-xl border border-dashed border-slate-200 p-2 text-center text-sm font-mono text-slate-400 bg-slate-50/50 dark:border-slate-800 dark:bg-slate-950">
-                    Character: <span className="font-bold text-slate-800 dark:text-white bg-slate-200 dark:bg-slate-850 rounded px-1.5 py-0.5">{char.char}</span>
+                  <div className="rounded-xl border border-dashed border-slate-200 dark:border-slate-850 p-2 text-center text-xs font-mono text-slate-400 bg-slate-50/50 dark:bg-slate-950/40">
+                    Display: <span className="font-bold text-slate-800 dark:text-white bg-slate-200/50 dark:bg-slate-800 rounded px-1.5 py-0.5">{char.char}</span>
                   </div>
 
                   <button
                     onClick={() => handleCopy(char.char, char.id)}
-                    className={`rounded-xl py-2.5 text-xs font-bold transition-all shadow-sm ${
+                    className={`rounded-xl py-2.5 text-xs font-black uppercase tracking-wider transition-all shadow-sm cursor-pointer ${
                       isCopied
-                        ? 'bg-emerald-500 text-white shadow-emerald-100'
+                        ? 'bg-emerald-500 text-white shadow-emerald-500/10'
                         : 'bg-violet-600 text-white hover:bg-violet-750'
                     }`}
                   >
-                    {isCopied ? '✓ Copied' : 'Copy Character'}
+                    {isCopied ? '✓ Copied' : 'Copy Space Code'}
                   </button>
                 </div>
               </div>

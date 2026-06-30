@@ -11,123 +11,146 @@ export default function Logo() {
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      {/* Interactive Nano Banana SVG Icon */}
-      <div className="relative flex items-center justify-center w-12 h-12">
+      {/* Interactive Esports Logo */}
+      <div className="relative flex items-center justify-center w-14 h-14">
         {/* Glow effect background */}
-        <div className={`absolute inset-0 rounded-full bg-yellow-400/20 blur-md transition-all duration-500 scale-75 group-hover:scale-125 group-hover:bg-yellow-400/40 dark:bg-yellow-500/10 dark:group-hover:bg-yellow-400/30`} />
+        <div className={`absolute inset-0 rounded-full bg-violet-500/20 blur-lg transition-all duration-500 scale-90 ${
+          isHovered ? 'scale-130 bg-fuchsia-500/35 dark:bg-fuchsia-500/25' : ''
+        }`} />
         
         <svg 
           viewBox="0 0 100 100" 
-          className={`w-10 h-10 transition-all duration-500 transform ${
+          className={`w-12 h-12 transition-all duration-500 transform ${
             isHovered 
-              ? 'scale-110 rotate-12 -translate-y-1 drop-shadow-[0_0_8px_rgba(234,179,8,0.8)]' 
-              : 'scale-100 rotate-0 translate-y-0 drop-shadow-[0_2px_4px_rgba(0,0,0,0.1)]'
+              ? 'scale-115 rotate-2 -translate-y-0.5 drop-shadow-[0_0_12px_rgba(168,85,247,0.8)]' 
+              : 'scale-100 rotate-0 translate-y-0 drop-shadow-[0_4px_6px_rgba(0,0,0,0.3)]'
           }`}
         >
           <defs>
-            {/* Cyber Gradient */}
-            <linearGradient id="bananaGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stopColor="#fef08a" /> {/* Light Yellow */}
-              <stop offset="60%" stopColor="#eab308" /> {/* Yellow-500 */}
-              <stop offset="100%" stopColor="#ca8a04" /> {/* Yellow-600 */}
+            {/* Neon RGB Gradients */}
+            <linearGradient id="shieldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stopColor="#a855f7" /> {/* Violet-500 */}
+              <stop offset="100%" stopColor="#ec4899" /> {/* Pink-500 */}
             </linearGradient>
             
-            {/* Tech Cyber Grid Pattern */}
-            <pattern id="nanoGrid" width="10" height="10" patternUnits="userSpaceOnUse">
-              <path d="M 10 0 L 0 0 0 10" fill="none" stroke="rgba(255, 255, 255, 0.15)" strokeWidth="0.5" />
-            </pattern>
-            
-            {/* Cyberpunk Pink Accent Gradient */}
-            <linearGradient id="cyberPink" x1="0%" y1="0%" x2="100%" y2="0%">
-              <stop offset="0%" stopColor="#ec4899" /> {/* Pink-500 */}
-              <stop offset="100%" stopColor="#a855f7" /> {/* Purple-500 */}
+            <linearGradient id="crownGrad" x1="0%" y1="100%" x2="0%" y2="0%">
+              <stop offset="0%" stopColor="#f59e0b" /> {/* Amber-500 */}
+              <stop offset="100%" stopColor="#fef08a" /> {/* Yellow-200 */}
+            </linearGradient>
+
+            <linearGradient id="swordGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stopColor="#06b6d4" /> {/* Cyan-500 */}
+              <stop offset="100%" stopColor="#3b82f6" /> {/* Blue-500 */}
+            </linearGradient>
+
+            <linearGradient id="bannerGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stopColor="#1e1b4b" /> {/* Indigo-950 */}
+              <stop offset="50%" stopColor="#312e81" /> {/* Indigo-900 */}
+              <stop offset="100%" stopColor="#1e1b4b" /> {/* Indigo-950 */}
             </linearGradient>
           </defs>
 
-          {/* Banana Body Path */}
-          {/* A futuristic banana composed of geometric curves & panel cuts */}
+          {/* BACKGROUND: Crossed Swords / Lightning Blades (Esports Theme) */}
+          <g className={`transition-transform duration-700 origin-center ${isHovered ? 'rotate-12 scale-105' : ''}`}>
+            {/* Left Blade */}
+            <path
+              d="M 15 15 L 45 45 L 35 48 L 12 25 Z"
+              fill="url(#swordGrad)"
+              opacity="0.9"
+            />
+            {/* Right Blade */}
+            <path
+              d="M 85 15 L 55 45 L 65 48 L 88 25 Z"
+              fill="url(#swordGrad)"
+              opacity="0.9"
+            />
+            {/* Blade Guards/Details */}
+            <circle cx="35" cy="35" r="3" fill="#ffffff" opacity="0.8" />
+            <circle cx="65" cy="65" r="3" fill="#ffffff" opacity="0.8" />
+          </g>
+
+          {/* MAIN SHIELD: Crowned Esports Crest */}
           <path
-            d="M 25 15 
-               C 35 12, 65 15, 80 40 
-               C 92 60, 85 85, 75 90 
-               C 65 95, 72 82, 75 75
-               C 80 62, 78 45, 65 30
-               C 52 15, 30 22, 20 28
-               Z"
-            fill="url(#bananaGrad)"
-            stroke={isHovered ? "#fde047" : "#ca8a04"}
-            strokeWidth="1.5"
+            d="M 50 20 
+               C 68 20, 80 28, 80 50 
+               C 80 72, 65 85, 50 92 
+               C 35 85, 20 72, 20 50 
+               C 20 28, 32 20, 50 20 Z"
+            fill="#090d16"
+            stroke="url(#shieldGrad)"
+            strokeWidth="3"
             className="transition-colors duration-300"
           />
 
-          {/* Tech overlay Grid (makes it "Nano") */}
+          {/* Shield Inner Neon Border (Cyber glow ring) */}
           <path
-            d="M 25 15 
-               C 35 12, 65 15, 80 40 
-               C 92 60, 85 85, 75 90 
-               C 65 95, 72 82, 75 75
-               C 80 62, 78 45, 65 30
-               C 52 15, 30 22, 20 28
-               Z"
-            fill="url(#nanoGrid)"
-            mask="url(#bananaMask)"
-          />
-
-          {/* Futuristic panel lines & glowing circuitry cuts */}
-          <path
-            d="M 40 22 C 50 20, 68 28, 73 45"
+            d="M 50 25 
+               C 64 25, 74 31, 74 50 
+               C 74 67, 62 78, 50 84 
+               C 38 78, 26 67, 26 50 
+               C 26 31, 36 25, 50 25 Z"
             fill="none"
-            stroke={isHovered ? "#ffffff" : "rgba(254, 240, 138, 0.6)"}
-            strokeWidth="1"
-            strokeDasharray="4 2"
-          />
-          <path
-            d="M 52 29 C 58 30, 68 38, 71 52"
-            fill="none"
-            stroke={isHovered ? "#ec4899" : "rgba(234, 179, 8, 0.4)"}
-            strokeWidth="1"
-          />
-
-          {/* Nano stem (top joint) */}
-          <path
-            d="M 25 15 C 20 18, 15 15, 12 10 C 14 8, 22 10, 25 15 Z"
-            fill="#854d0e"
-            stroke="#ca8a04"
-            strokeWidth="1"
-          />
-
-          {/* Nano tips/ports (bottom joint) */}
-          <circle cx="75" cy="90" r="3" fill="#3f3f46" stroke="#f43f5e" strokeWidth="1" />
-          
-          {/* Floating cyber energy ring */}
-          <ellipse
-            cx="50"
-            cy="50"
-            rx="42"
-            ry="18"
-            fill="none"
-            stroke="url(#cyberPink)"
+            stroke={isHovered ? "#22c55e" : "#a855f7"}
             strokeWidth="1.5"
-            strokeDasharray="20 10"
-            transform="rotate(-25 50 50)"
-            className={`transition-all duration-1000 ${
-              isHovered ? 'animate-[spin_4s_linear_infinite]' : 'opacity-60'
-            }`}
+            strokeDasharray={isHovered ? "6 3" : "none"}
+            className="transition-all duration-300"
+          />
+
+          {/* SHIELD CREST: Golden Crown */}
+          <path
+            d="M 38 42 
+               L 42 52 
+               L 50 45 
+               L 58 52 
+               L 62 42 
+               L 56 46 
+               L 50 36 
+               L 44 46 Z"
+            fill="url(#crownGrad)"
+            stroke="#d97706"
+            strokeWidth="1.5"
+            className={`transition-all duration-500 origin-center ${isHovered ? 'scale-110 -translate-y-1' : ''}`}
           />
           
-          {/* Micro dots */}
-          <circle cx="28" cy="45" r="1.5" fill="#22c55e" className={isHovered ? "animate-ping" : ""} />
-          <circle cx="58" cy="62" r="1.5" fill="#3b82f6" className={isHovered ? "animate-ping" : ""} />
+          {/* Glowing Gem on Crown */}
+          <circle cx="50" cy="35" r="1.5" fill="#ffffff" className={isHovered ? 'animate-ping' : ''} />
+
+          {/* FOREGROUND: Name Tag Banner Plate */}
+          <polygon
+            points="10,60 90,60 82,74 18,74"
+            fill="url(#bannerGrad)"
+            stroke="url(#shieldGrad)"
+            strokeWidth="2"
+          />
+
+          {/* Banner Cut-outs/Highlights */}
+          <line x1="13" y1="63" x2="87" y2="63" stroke="#a855f7" strokeWidth="1" opacity="0.6" />
+          <line x1="20" y1="71" x2="80" y2="71" stroke="#ec4899" strokeWidth="1" opacity="0.6" />
+
+          {/* Banner Text: "SN" stylized look */}
+          <text
+            x="50"
+            y="70"
+            fill="#ffffff"
+            fontSize="10"
+            fontWeight="900"
+            textAnchor="middle"
+            letterSpacing="2"
+            fontFamily="monospace"
+            className="select-none tracking-widest font-black"
+          >
+            {isHovered ? '☠' : '⚔'}
+          </text>
         </svg>
       </div>
 
-      {/* Brand Wordmark with fancy font transition */}
+      {/* Title Text Section - High-Impact Esports Gaming look */}
       <div className="flex flex-col">
-        <span className="text-xl font-extrabold tracking-tight bg-gradient-to-r from-violet-600 via-fuchsia-500 to-pink-500 bg-clip-text text-transparent dark:from-violet-400 dark:via-fuchsia-400 dark:to-pink-400 transition-all duration-300">
-          {isHovered ? '꧁ 𝔖𝔱𝔶𝔩𝔢𝔑𝔞𝔪𝔢 ꧂' : '꧁ SᴛʏʟᴇNᴀᴍᴇ ꧂'}
+        <span className="text-2xl font-black uppercase tracking-wider bg-gradient-to-r from-violet-500 via-fuchsia-500 to-pink-500 bg-clip-text text-transparent dark:from-violet-400 dark:via-fuchsia-400 dark:to-pink-400 transition-all duration-300">
+          {isHovered ? '🆂🆃🆈🅻🅴🅽🅰🅼🅴' : '꧁ SᴛʏʟᴇNᴀᴍᴇ ꧂'}
         </span>
-        <span className="text-[9px] font-medium uppercase tracking-widest text-slate-400 dark:text-slate-500 transition-colors group-hover:text-yellow-500 dark:group-hover:text-yellow-400">
-          Nᴀɴᴏ Bᴀɴᴀɴᴀ Lᴀʙs
+        <span className="text-[9px] font-black uppercase tracking-widest text-slate-500 dark:text-slate-400 flex items-center space-x-1 transition-colors group-hover:text-cyan-400">
+          <span>🎮 GAMING NICKNAME LAB</span>
         </span>
       </div>
     </div>

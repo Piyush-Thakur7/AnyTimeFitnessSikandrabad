@@ -2,7 +2,7 @@ import React from 'react';
 import Generator from '@/components/Generator';
 import { Metadata } from 'next';
 
-// TODO: Manually verify the Free Fire 12-character limit in-game before launching.
+// TODO: Verify the Free Fire 12-character limit manually before launching.
 const FF_LIMIT = 12;
 
 export const metadata: Metadata = {
@@ -12,7 +12,6 @@ export const metadata: Metadata = {
 };
 
 export default function FreeFireNameGeneratorPage() {
-  // FAQ Schema JSON-LD structure
   const faqSchema = {
     '@context': 'https://schema.org',
     '@type': 'FAQPage',
@@ -45,95 +44,97 @@ export default function FreeFireNameGeneratorPage() {
   };
 
   return (
-    <div className="mx-auto w-full max-w-7xl px-4 py-12 sm:px-6 lg:px-8 animate-fadeIn">
-      {/* FAQ Schema Injector */}
+    <div className="mx-auto w-full max-w-7xl px-4 py-12 sm:px-6 lg:px-8 animate-fadeIn relative">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
       />
 
+      {/* Themed Background Overlay */}
+      <div className="absolute top-0 left-1/4 right-1/4 h-[300px] bg-gradient-to-b from-orange-500/10 to-transparent blur-3xl pointer-events-none z-0" />
+
       {/* Header and Explainer */}
-      <section className="space-y-4 mb-10 text-center md:text-left">
-        <div className="inline-flex items-center space-x-1.5 rounded-lg bg-orange-50 px-2.5 py-1 text-xs font-bold text-orange-600 dark:bg-orange-950/30 dark:text-orange-400">
+      <section className="space-y-4 mb-10 text-center md:text-left relative z-10">
+        <div className="inline-flex items-center space-x-1.5 rounded-lg bg-orange-500/10 px-2.5 py-1 text-xs font-black uppercase tracking-widest text-orange-500">
           <span>🔥 Free Fire Max Nicknames</span>
         </div>
-        <h1 className="text-3xl font-extrabold tracking-tight text-slate-800 dark:text-slate-100 sm:text-4xl md:text-5xl">
+        <h1 className="text-3xl font-black uppercase tracking-tight text-slate-800 dark:text-slate-100 sm:text-4xl md:text-5xl">
           Free Fire Stylish Name Generator
         </h1>
-        <p className="text-sm text-slate-500 dark:text-slate-400 max-w-3xl leading-relaxed">
+        <p className="text-sm font-semibold text-slate-500 dark:text-slate-400 max-w-3xl leading-relaxed">
           Create premium stylish nicknames for Free Fire Max. Our generator automatically tracks the strict <strong>12-character limit</strong> imposed by Garena, warning you if your custom fonts and symbols exceed the bounds.
         </p>
       </section>
 
-      {/* Generator Component */}
-      <section className="mb-14">
-        <Generator gameLimit={FF_LIMIT} gameName="Free Fire" />
+      {/* Generator Component (Orange Theme) */}
+      <section className="mb-14 relative z-10">
+        <Generator gameLimit={FF_LIMIT} gameName="Free Fire" theme="orange" />
       </section>
 
       {/* Paste Instructions */}
-      <section className="rounded-3xl border border-slate-200 bg-white p-6 md:p-8 dark:border-slate-800 dark:bg-slate-900 mb-14 space-y-6">
-        <h2 className="text-xl font-extrabold text-slate-800 dark:text-slate-150">
-          📋 How to Change Your Nickname in Free Fire (Step-by-Step)
+      <section className="gaming-card rounded-3xl p-6 md:p-8 mb-14 space-y-6 relative z-10">
+        <h2 className="text-base font-black uppercase tracking-widest text-slate-800 dark:text-slate-150 flex items-center space-x-2">
+          <span>📋 HOW TO CHANGE YOUR NICKNAME IN FREE FIRE</span>
         </h2>
         
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
-          <ol className="list-decimal pl-5 space-y-4 text-sm text-slate-650 dark:text-slate-450 leading-relaxed">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+          <ol className="list-decimal pl-5 space-y-3.5 text-sm text-slate-500 dark:text-slate-400 leading-relaxed font-semibold">
             <li>
-              Generate your favorite name using the tool above and click the <strong>Copy</strong> button.
+              Generate your favorite nickname above and click the <strong className="text-orange-500">Copy</strong> button.
             </li>
             <li>
-              Open the <strong>Free Fire Max</strong> app on your Android or iOS device.
+              Launch the <strong className="text-slate-800 dark:text-slate-200">Free Fire Max</strong> application on your mobile device.
             </li>
             <li>
-              Tap your <strong>Profile Banner</strong> in the top-left corner of the main lobby.
+              Tap your <strong className="text-slate-800 dark:text-slate-200">Avatar banner</strong> in the top-left corner of the lobby screen.
             </li>
             <li>
-              Tap the yellow <strong>Edit Icon</strong> (pencil inside a notepad symbol) near your avatar.
+              Tap the yellow <strong className="text-slate-800 dark:text-slate-200">Edit Notepad Icon</strong> near your current avatar card.
             </li>
             <li>
-              Select your current nickname field to open the Naming dialog.
+              Select your nickname edit input field.
             </li>
             <li>
-              Tap inside the new nickname field, paste your copied stylish name, and tap <strong>Confirm</strong> (costs 390 Diamonds or 1 Name Change Card).
+              Paste your copied stylish name into the field and tap <strong className="text-orange-500">Confirm</strong> (requires 390 diamonds or a Name Change Card).
             </li>
           </ol>
 
           {/* Screenshot placeholder box for premium layout */}
-          <div className="rounded-2xl border-2 border-dashed border-slate-200 bg-slate-50 p-8 text-center dark:border-slate-800 dark:bg-slate-950 flex flex-col items-center justify-center min-h-[220px]">
-            <svg className="mx-auto h-12 w-12 text-slate-400 dark:text-slate-600 mb-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <div className="rounded-2xl border-2 border-dashed border-slate-200 dark:border-slate-800 bg-slate-50/50 p-6 text-center dark:bg-slate-950/40 flex flex-col items-center justify-center min-h-[200px]">
+            <svg className="h-10 w-10 text-slate-400 dark:text-slate-600 mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
             </svg>
-            <span className="text-xs font-bold text-slate-550 dark:text-slate-450 uppercase tracking-wider">
-              [Screenshot Placeholder]
+            <span className="text-[10px] font-black text-slate-500 dark:text-slate-400 uppercase tracking-widest">
+              [Screenshot: Free Fire Profile Settings]
             </span>
-            <span className="text-xs text-slate-400 dark:text-slate-500 mt-1 max-w-xs">
-              Free Fire Profile Naming dialog showing the input text field and Name Change Card confirmation.
+            <span className="text-[11px] text-slate-400 dark:text-slate-500 mt-1 max-w-xs leading-normal">
+              Shows Avatar card editor showing nickname modification input.
             </span>
           </div>
         </div>
       </section>
 
       {/* Manual FAQ Text Blocks */}
-      <section className="space-y-6">
-        <h2 className="text-xl font-extrabold text-slate-800 dark:text-slate-150">
-          ❓ Frequently Asked Questions
+      <section className="space-y-6 relative z-10">
+        <h2 className="text-xs font-black uppercase tracking-widest text-slate-400 dark:text-slate-500">
+          ❓ FREQUENTLY ASKED QUESTIONS
         </h2>
         
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-sm">
-          <div className="rounded-2xl border border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-slate-900 space-y-2">
-            <h3 className="font-extrabold text-slate-800 dark:text-slate-100">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+          <div className="gaming-card rounded-2xl p-5 space-y-2">
+            <h3 className="font-extrabold text-slate-850 dark:text-slate-100 uppercase tracking-wide text-xs">
               Why did my Free Fire name get truncated?
             </h3>
-            <p className="text-slate-500 dark:text-slate-400 leading-relaxed">
+            <p className="text-slate-550 dark:text-slate-400 leading-relaxed text-xs">
               If your nickname is cut short, it exceeded the strict 12-character limit. Note that stylish Unicode characters and symbol decorations count as characters, and some complex emojis may occupy 2 to 4 slots in database indexing.
             </p>
           </div>
 
-          <div className="rounded-2xl border border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-slate-900 space-y-2">
-            <h3 className="font-extrabold text-slate-800 dark:text-slate-100">
+          <div className="gaming-card rounded-2xl p-5 space-y-2">
+            <h3 className="font-extrabold text-slate-855 dark:text-slate-100 uppercase tracking-wide text-xs">
               Can I use emojis in my Free Fire username?
             </h3>
-            <p className="text-slate-500 dark:text-slate-400 leading-relaxed">
+            <p className="text-slate-500 dark:text-slate-400 leading-relaxed text-xs">
               While standard mobile keyboard emojis (like 👍, 😂) are generally rejected or display as white squares, special symbolic diacritics (like ꧁ ꧂, ☬, ༒) are fully supported by Free Fire Max.
             </p>
           </div>
