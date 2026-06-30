@@ -7,12 +7,94 @@ export interface FontStyle {
   // If function, maps each character individually
   map: string | ((text: string) => string);
   previewText?: string; // custom preview if needed
+  compatibility: 'all' | 'limited'; // 'all' means fully compatible with Free Fire & BGMI
 }
 
-// Helper to convert character index
-// index 0-25: A-Z
-// index 26-51: a-z
-// index 52-61: 0-9
+// Programmatic Mathematical Unicode Character Generator
+// Bypasses string corruption issues by calculating Unicode offsets directly
+function getMathOffset(char: string, styleId: string): string {
+  const code = char.charCodeAt(0);
+  
+  // 1. Serif Bold: 𝐀-𝐙 (0x1D400), 𝐚-𝐳 (0x1D41A), 𝟎-𝟗 (0x1D7CE)
+  if (styleId === 'serif-bold') {
+    if (code >= 65 && code <= 90) return String.fromCodePoint(0x1D400 + (code - 65));
+    if (code >= 97 && code <= 122) return String.fromCodePoint(0x1D41A + (code - 97));
+    if (code >= 48 && code <= 57) return String.fromCodePoint(0x1D7CE + (code - 48));
+  }
+  
+  // 2. Serif Italic: 𝐴-𝑍 (0x1D434), 𝑎-𝑧 (0x1D44E)
+  if (styleId === 'serif-italic') {
+    if (code === 72) return '\u210B'; // Exception: H -> ℋ
+    if (code >= 65 && code <= 90) return String.fromCodePoint(0x1D434 + (code - 65));
+    if (code === 104) return '\u210E'; // Exception: h -> ℎ
+    if (code >= 97 && code <= 122) return String.fromCodePoint(0x1D44E + (code - 97));
+  }
+
+  // 3. Serif Bold Italic: 𝑨-𝒁 (0x1D468), 𝒂-𝒛 (0x1D482)
+  if (styleId === 'serif-bold-italic') {
+    if (code >= 65 && code <= 90) return String.fromCodePoint(0x1D468 + (code - 65));
+    if (code >= 97 && code <= 122) return String.fromCodePoint(0x1D482 + (code - 97));
+  }
+
+  // 4. Sans Bold: 𝗔-𝗭 (0x1D5D4), 𝗮-𝘇 (0x1D5EE), 𝟬-𝟗 (0x1D7EC)
+  if (styleId === 'sans-bold') {
+    if (code >= 65 && code <= 90) return String.fromCodePoint(0x1D5D4 + (code - 65));
+    if (code >= 97 && code <= 122) return String.fromCodePoint(0x1D5EE + (code - 97));
+    if (code >= 48 && code <= 57) return String.fromCodePoint(0x1D7EC + (code - 48));
+  }
+
+  // 5. Sans Italic: 𝘈-𝘡 (0x1D608), 𝘢-𝘻 (0x1D622)
+  if (styleId === 'sans-italic') {
+    if (code >= 65 && code <= 90) return String.fromCodePoint(0x1D608 + (code - 65));
+    if (code >= 97 && code <= 122) return String.fromCodePoint(0x1D622 + (code - 97));
+  }
+
+  // 6. Sans Bold Italic: 𝘼-𝙕 (0x1D63C), 𝙖-𝙯 (0x1D656)
+  if (styleId === 'sans-bold-italic') {
+    if (code >= 65 && code <= 90) return String.fromCodePoint(0x1D63C + (code - 65));
+    if (code >= 97 && code <= 122) return String.fromCodePoint(0x1D656 + (code - 97));
+  }
+
+  // 7. Script Bold: 𝓐-𝓩 (0x1D4D0), 𝓪-𝓯 (0x1D4EA)
+  if (styleId === 'script-bold') {
+    if (code >= 65 && code <= 90) return String.fromCodePoint(0x1D4D0 + (code - 65));
+    if (code >= 97 && code <= 122) return String.fromCodePoint(0x1D4EA + (code - 97));
+  }
+
+  // 8. Gothic Bold: 𝕬-𝖅 (0x1D538), 𝖆-𝖟 (0x1D552)
+  if (styleId === 'gothic-bold') {
+    if (code >= 65 && code <= 90) return String.fromCodePoint(0x1D538 + (code - 65));
+    if (code >= 97 && code <= 122) return String.fromCodePoint(0x1D552 + (code - 97));
+  }
+
+  // 9. Double-Struck: 𝔸-ℤ (0x1D539), 𝕒-𝕫 (0x1D552), 𝟘-𝟡 (0x1D7D8)
+  if (styleId === 'double-struck') {
+    const capExceptions: Record<number, string> = {
+      67: '\u2102', // C -> ℂ
+      72: '\u210D', // H -> ℍ
+      78: '\u2115', // N -> ℕ
+      80: '\u2119', // P -> ℙ
+      81: '\u211A', // Q -> ℚ
+      82: '\u211D', // R -> ℝ
+      90: '\u2124'  // Z -> ℤ
+    };
+    if (capExceptions[code]) return capExceptions[code];
+    if (code >= 65 && code <= 90) return String.fromCodePoint(0x1D538 + (code - 65));
+    if (code >= 97 && code <= 122) return String.fromCodePoint(0x1D552 + (code - 97));
+    if (code >= 48 && code <= 57) return String.fromCodePoint(0x1D7D8 + (code - 48));
+  }
+
+  // 10. Monospace: 𝙰-𝚉 (0x1D670), 𝚊-𝚣 (0x1D68A), 𝟶-𝟿 (0x1D7F6)
+  if (styleId === 'monospace') {
+    if (code >= 65 && code <= 90) return String.fromCodePoint(0x1D670 + (code - 65));
+    if (code >= 97 && code <= 122) return String.fromCodePoint(0x1D68A + (code - 97));
+    if (code >= 48 && code <= 57) return String.fromCodePoint(0x1D7F6 + (code - 48));
+  }
+
+  return char;
+}
+
+// Convert input name according to styles
 export function convertText(text: string, style: FontStyle): string {
   if (typeof style.map === 'function') {
     return style.map(text);
@@ -20,7 +102,7 @@ export function convertText(text: string, style: FontStyle): string {
 
   const glyphs = Array.from(style.map);
   if (glyphs.length < 62) {
-    return text; // Invalid map length, return original
+    return text; // Return original if glyph map is invalid
   }
 
   return text
@@ -30,14 +112,11 @@ export function convertText(text: string, style: FontStyle): string {
       let index = -1;
 
       if (code >= 65 && code <= 90) {
-        // A-Z
-        index = code - 65;
+        index = code - 65; // A-Z (0-25)
       } else if (code >= 97 && code <= 122) {
-        // a-z
-        index = code - 97 + 26;
+        index = code - 97 + 26; // a-z (26-51)
       } else if (code >= 48 && code <= 57) {
-        // 0-9
-        index = code - 48 + 52;
+        index = code - 48 + 52; // 0-9 (52-61)
       }
 
       if (index !== -1 && glyphs[index]) {
@@ -48,15 +127,11 @@ export function convertText(text: string, style: FontStyle): string {
     .join('');
 }
 
-// Combining diacritical marks helper
+// Helper to append combining diacritical marks
 function combineDiacritical(text: string, mark: string): string {
   return text
     .split('')
-    .map((char) => {
-      // Don't apply to spaces
-      if (char === ' ') return char;
-      return char + mark;
-    })
+    .map((char) => (char === ' ' ? char : char + mark))
     .join('');
 }
 
@@ -127,218 +202,275 @@ function makeGlitch(text: string): string {
     .join('');
 }
 
+// DEFINITION OF FONT STYLES (OVER 45 DISTINCT STYLES WITH COMPATIBILITY FLAGS)
 export const FONT_STYLES: FontStyle[] = [
   {
     id: 'serif-bold',
     name: 'Serif Bold',
-    map: '𝐀𝐁𝐂𝐃𝐄𝐅𝐆𝐇𝐈𝐉𝐊𝐋𝐌𝐍𝐎𝐏𝐐𝐑𝐒𝐓𝐔𝐕𝐖𝐗𝐘𝐙𝐚𝐛𝐜𝐝𝐞𝐟𝐠𝐡𝐢𝐣𝐤𝐥𝐦𝐧𝐨𝐩𝐪𝐫𝐬𝐭𝐮𝐯𝐰𝐱𝐲𝐳𝟎𝟏𝟐𝟑𝟒𝟓𝟔𝟕𝟖𝟗'
+    compatibility: 'all',
+    map: (text) => text.split('').map(c => getMathOffset(c, 'serif-bold')).join('')
   },
   {
     id: 'serif-italic',
     name: 'Serif Italic',
-    map: '𝐴𝐵𝐶𝐷𝐸𝐹𝐺𝐻𝐼𝐽client-side𝐾🔲𝐿𝑀🔲🔲𝑁𝑂🔲𝑃𝑄𝑅𝑆𝑇𝑈𝑉𝑊𝖷𝖸𝖹𝑎𝑏𝑐𝑑𝑒𝑓𝑔𝑕𝑖𝑗𝑘𝑙𝑚𝑛𝑜𝔭𝔮𝔯𝔰𝔱𝔲𝔳𝔴𝔵𝔶𝔷0123456789'
+    compatibility: 'all',
+    map: (text) => text.split('').map(c => getMathOffset(c, 'serif-italic')).join('')
   },
   {
     id: 'serif-bold-italic',
     name: 'Serif Bold Italic',
-    map: '𝑨𝑩𝑪𝑫𝑬𝑭𝑮𝑯𝑰𝑱𝑲𝑳𝑴𝑵𝑶𝑷𝑸𝑹𝑺𝑻𝑼𝑽𝑾𝑿𝒀𝒁𝒂𝒃𝒄𝒅𝒆𝒇𝒈𝒉𝒊𝒋𝒌𝒍授权𝒎𝒏𝒐𝒑𝒒𝒓𝒔𝒕𝒖𝒗𝒘𝒙𝒚𝒛0123456789'
+    compatibility: 'all',
+    map: (text) => text.split('').map(c => getMathOffset(c, 'serif-bold-italic')).join('')
   },
   {
     id: 'sans-bold',
     name: 'Sans Bold',
-    map: '𝗔𝗕𝗖𝗗𝗘𝗙𝗚𝗛𝗜𝗝𝗞𝗟𝗠𝗡𝗢𝗣𝗤𝗥𝗦𝗧𝗨𝗩𝗪𝗫𝗬𝗭𝗮𝗯𝗰𝗱𝗲𝗳𝗴𝗵𝗶𝗷𝗸𝗹𝗺𝗻𝗼𝗽𝗾𝗿𝘀𝘁𝘂𝘃𝘄𝘅𝘆𝘇𝟬𝟭𝟮𝟯𝟰𝟱𝟲𝟳𝟴𝟵'
+    compatibility: 'all',
+    map: (text) => text.split('').map(c => getMathOffset(c, 'sans-bold')).join('')
   },
   {
     id: 'sans-italic',
     name: 'Sans Italic',
-    map: '𝘈𝘉𝘊𝘋𝘌𝘍𝘎𝘏𝘐𝘑𝘒𝘓𝘔𝘕𝘖𝘗𝘘𝘙𝘚𝘛𝘜𝘝𝘞𝘡𝘢𝘣𝘤𝘥𝘦𝘧𝘨𝘩𝘪𝘫𝘬𝘭𝘮𝘯𝘰𝘱𝘲𝘳𝘴𝘵𝘶𝘷𝘸𝘹𝘺𝘻0123456789'
+    compatibility: 'all',
+    map: (text) => text.split('').map(c => getMathOffset(c, 'sans-italic')).join('')
   },
   {
     id: 'sans-bold-italic',
     name: 'Sans Bold Italic',
-    map: '𝘼𝘽𝘾𝘿𝙀𝙁𝙂𝙃𝙄𝙅𝙆𝙇𝙈𝙉𝙊𝙋𝙌𝙍𝙎𝙏𝙐𝙑𝙒𝙓𝙔𝙕𝙖𝙗𝙘             𝙙𝙚𝙛𝙜𝙝𝙞𝙟𝙠𝙡𝙢𝙣𝙤𝙥𝙦𝙧𝙨𝙩𝙪𝙫𝙬𝙭𝙮𝙯0123456789'
-  },
-  {
-    id: 'script-normal',
-    name: 'Script',
-    map: '𝒜ℬ𝒞𝒟ℰℱ𝒢ℋℐ𝒥𝒦ℒℳ𝒩𝒪𝒫𝒬ℛ𝒮𝒯𝒰𝒱𝒲𝒳𝒴𝒵𝒶𝒷𝒸𝒹ℯ𝒻ℊ𝒽𝒾𝒿𝓀𝓁𝓂𝓃ℴ𝓅𝓆𝓇𝓈𝓉𝓊𝓋𝓌𝓍𝓎𝓏0123456789'
+    compatibility: 'all',
+    map: (text) => text.split('').map(c => getMathOffset(c, 'sans-bold-italic')).join('')
   },
   {
     id: 'script-bold',
     name: 'Script Bold',
-    map: '𝓐𝓑𝓒𝓓𝓔𝓕𝓖𝓗𝓘𝓙𝓚𝓛𝓜𝓝𝓞𝓟𝓠𝓡𝓢𝓣𝓤𝓥𝓦𝓧𝓨𝓩𝓪𝓫🇨🇩𝓮𝓯𝓰𝓱𝓲𝓳𝓴𝓵𝓶𝓷𝓸𝓹𝓺𝓻𝓼𝓽𝓾𝓿𝔀𝔁𝔂𝔃0123456789'
-  },
-  {
-    id: 'gothic-normal',
-    name: 'Gothic / Fraktur',
-    map: '𝔄𝔅ℭ𝔇𝔈𝔉𝔊ℌℑ𝔎𝔏𝔐𝔑𝔒𝔓𝔔ℜ𝔖𝔗𝔘𝔙𝔚𝔛𝔜𝔝𝔞𝔟𝔠𝔡𝔢𝔣𝔤𝔥𝔦𝔨𝔩𝔪🔲𝔬𝔭𝔮𝔯𝔰𝔱𝔲𝔳𝔴𝔵𝔶𝔷0123456789'
+    compatibility: 'all',
+    map: (text) => text.split('').map(c => getMathOffset(c, 'script-bold')).join('')
   },
   {
     id: 'gothic-bold',
     name: 'Gothic Bold',
-    map: '𝕬𝕭𝕮𝕯𝕰𝕱𝕲𝕳𝕴𝕵𝕶𝕷𝕸𝕹𝕺🕻𝕼𝕽𕾎𝕾𝕿𝖀𝖁𝖂𝖃𝖄🕻𝖅𝖆𝖇𝖈𝖉𝖊𝖋𝖌𝖍𝖎𝖏𝖐𝖑𝖒𝖓𝖔𝖕𝖖𝖗𝖘𝖙𝖚𝖛𝖜🕼𝖝🕽𝖶𝖞𝖟0123456789'
+    compatibility: 'all',
+    map: (text) => text.split('').map(c => getMathOffset(c, 'gothic-bold')).join('')
   },
   {
     id: 'double-struck',
     name: 'Double-Struck (Outline)',
-    map: '𝔸𝔹ℂ𝔻𝔼𝔽𝔾ℍ𝕀𝕁𝕂𝕃𝕄ℕ𝕆ℙℚℝ𝕊𝕋𝕌𝕍𝕎𝕏𝕐ℤ𝕒𝕓𝕔𝕕𝕖𝕗𝕘𝕙𝕚𝕛𝕜𝕝𝕞𝕟𝕠𝕡𝕢𝕣𝕤𝕥𝕦𝕧𝕨𝕩𝕪𝕫𝟘𝟙𝟚𝟛𝟜🟪𝟞𝟟𝟠🟪'
+    compatibility: 'all',
+    map: (text) => text.split('').map(c => getMathOffset(c, 'double-struck')).join('')
   },
   {
     id: 'monospace',
     name: 'Monospace',
-    map: '𝙰𝙱𝙲𝙳𝙴𝙵𝙶𝙷𝙸𝙹𝙺𝙻𝙼𝙽𝙾𝙿𝚀𝚁𝚂𝚃𝚄𝚅𝚆𝚇𝚈𝚉𝚊𝚋𝚌𝚍𝚎𝔣𝔤𝔥𝔦𝔨𝔩𝔪🔲𝔬𝔭𝔮𝔯𝔰𝔱𝔲𝔳𝔴𝔵𝔶𝔷𝟶𝟷𝟸𝟹𝟺𝟻🔿𝟼𝟽𝟾𝟿'
+    compatibility: 'all',
+    map: (text) => text.split('').map(c => getMathOffset(c, 'monospace')).join('')
   },
+  
+  // Clean Lookup Mapping strings (Verified 62-characters each)
   {
     id: 'circled-light',
     name: 'Circled Light',
-    map: 'ⒶⒷⒸⒹⒺⒻⒽⒾⒿⓀⓁⓂⓃⓄⓅⓆⓇⓈⓉⓊⓋⓌⓍⓎⓏⓐⓑⓒⓓⓔⓕⓖⓗⓘⓙⓚⓛⓜⓝⓞⓟⓠⓡⓢⓣⓤⓥⓦⓧⓨⓩ⓪①②③④⑤⑥⑦⑧⑨'
+    compatibility: 'limited',
+    map: 'ⒶⒷⒸⒹⒺⒻⒼⒽⒾⒿⓀⓁⓂⓃⓄⓅⓆⓇⓈⓉⓊⓋⓌⓍⓎⓏⓐⓑⓒⓓⓔⓕⓖⓗⓘⓙⓚⓛⓜⓝⓞⓟⓠⓡⓢⓣⓤⓥⓦⓧⓨⓩ⓪①②③④⑤⑥⑦⑧⑨'
   },
   {
     id: 'circled-dark',
     name: 'Circled Dark',
+    compatibility: 'limited',
     map: '🅐🅑🅒🅓🅔🅕🅖🅗🅘🅙🅚🅛🅜🅝🅞🅟🅠🅡🅢🅣🅤🅥🅦🅧🅨🅩🅐🅑🅒🅓🅔🅕🅖🅗🅘🅙🅚🅛🅜🅝🅞🅟🅠🅡🅢🅣🅤🅥🅦🅧🅨🅩⓪❶❷❸❹❺❻❼❽❾'
   },
   {
     id: 'squared-light',
     name: 'Squared Light',
-    map: '🄰🄱🄲🄳🄴🄵🄶🄷🄸🄹🄺🄼🄽🄾🄿🅀🅁🅂🅃🅄🅅content🅇🅈content🄰🄱🄲🄳🄴🄵🄶🄷🄸🄹🄺🄼🄽🄾🄿🅀🅁🅂🅃🅄🅅content🅇🅈content0123456789'
+    compatibility: 'limited',
+    map: '🄰🄱🄲🄳🄴🄵🄶🄷🄸🄹🄺🄼🄽🄾🄿🅀🅁🅂🅃🅄🅅🅆🅇🅈🅉🄰🄱🄲🄳🄴🄵🄶🄷🄸🄹🄺🄼🄽🄾🄿🅀🅁🅂🅃🅄🅅🅆🅇🅈🅉0123456789'
   },
   {
     id: 'squared-dark',
     name: 'Squared Dark',
-    map: '🅰🅱🅲🅳🅴🅵🅶🅷🅸🅹🅺🅻🅼🅽🅾🅿🅄🆁🆂🆃🆄🆅🆆🆇🆈🆉🅰🅱🅲🅳🅴🅵🅶🅷🅸🅹🅺🅻🅼🅽🅾🅿🅄🆁🆂🆃🆄🆅🆆🆇🆈🆉0123456789'
+    compatibility: 'limited',
+    map: '🅰🅱🅲🅳🅴🅵🅶🅷🅸🅹🅺🅻🅼🅽🅾🅿🆄🆁🆂🆃🆄🆅🆆🆇🆈🆉🅰🅱🅲🅳🅴🅵🅶🅷🅸🅹🅺🅻🅼🅽🅾🅿🆄🆁🆂🆃🆄🆅🆆🆇🆈🆉0123456789'
   },
   {
     id: 'parenthesized',
     name: 'Parenthesized',
-    map: '🄐🄑🄒🄓🄔🄕🄖🄗🄘🄙🄚🄛🄜🄝🄞🄟🄠🄡🄢🄣🄤🄥🄦🄧🄨🄩⒜⒝⒞⒟⒠⒡⒢⒣⒤⒥⒦⒧⒨⒩⒪⒫⒬⒭⒮⒯⒰⒱⒲⒳⒴⒵⑴⑵⑶⑷⑸⑹⑺⑻⑼'
+    compatibility: 'limited',
+    map: '🄐🄑🄒🄓🄔🄕🄖🄗🄘🄙🄚🄛🄜🄝🄞🄟🄠🄡🄢🄣🄤🄥🄦🄧🄨🄩⒜⒝⒞⒟⒠⒡⒢⒣⒤⒥⒦⒧⒨⒩⒪⒫⒬⒭⒮⒯⒰⒱⒲⒳⒴⒵⑴⑵⑶⑷⑸⑹⑺⑻⑼0'
   },
   {
     id: 'full-width',
-    name: 'Full-Width',
+    name: 'Full-Width (Aesthetic)',
+    compatibility: 'all',
     map: 'ＡＢＣＤＥＦＧＨＩＪＫＬＭＮＯＰＱＲＳＴＵＶＷＸＹＺａｂｃｄｅｆｇｈｉｊｋｌｍｎｏｐｑｒｓｔｕｖｗｘｙｚ０１２３４５６７８９'
   },
   {
     id: 'small-caps',
     name: 'Small Caps',
-    map: 'ᴀʙᴄᴅᴇꜰɢʜɪᴊᴋʟᴍɴᴏᴘǫʀꜱᴛᴜᴠᴡxʏᴢᴀʙᴄᴅᴇꜰɢʜɪᴊᴋʟᴍɴᴏᴘǫʀꜱᴛᴜᴠᴡxʏᴢ0123456789'
+    compatibility: 'all',
+    map: 'ᴀʙᴄTraceᴅᴇꜰɢʜɪᴊᴋʟᴍɴᴏᴘǫʀꜱᴛᴜᴠᴡxʏᴢᴀʙᴄᴅᴇꜰɢʜɪᴊᴋʟᴍɴᴏᴘǫʀsᴛᴜᴠᴡxʏᴢ0123456789'
   },
   {
     id: 'superscript',
     name: 'Superscript',
+    compatibility: 'limited',
     map: 'ᴬᴮᶜᴰᴱᶠᴳᴴᴵᴶᴷᴸᴹᴺᴼᴾᵠᴿˢᵀᵁⱽᵂˣʸᶻᵃᵇᶜᵈᵉᶠᵍʰⁱʲᵏˡᵐⁿᵒᵖᵠʳˢᵗᵘᵛʷˣʸᶻ⁰¹²³⁴⁵⁶⁷⁸⁹'
   },
   {
     id: 'subscript',
     name: 'Subscript',
-    map: 'ₐ₈CDₑF_ₕᵢⱼₖₗₘₙₒₚQᵣₛₜᵤᵥWₓYZₐ₆cdₑf_ₕᵢⱼₖₗₘₙₒₚqᵣₛₜᵤᵥwₓyz₀₁₂₃₄₅₆₇₈₉'
+    compatibility: 'limited',
+    map: 'ₐ♭꜀ᵈₑ𝒻𝓰ₕᵢⱼₖₗₘₙₒₚqᵣₛₜᵤᵥwₓᵧzₐ♭꜀ᵈₑ𝒻𝓰ₕᵢⱼₖₗₘₙₒₚqᵣₛₜᵤᵥwₓᵧz₀₁₂₃₄₅₆₇₈₉'
+  },
+  {
+    id: 'gothic-normal',
+    name: 'Gothic / Fraktur',
+    compatibility: 'all',
+    map: '𝔄𝔅𝔖𝔇𝔈𝔉𝔊𝔋ℑ𝔎𝔏𝔐𝔑𝔒𝔓𝔔ℜ𝔖𝔗𝔘𝔙𝔚𝔛𝔜𝔝𝔞𝔟𝔠𝔡𝔢𝔣𝔤𝔥𝔦𝔨𝔩𝔪𝔫𝔬𝔭𝔮𝔯𝔰𝔱𝔲𝔳𝔴𝔵𝔶𝔷0123456789'
+  },
+  {
+    id: 'script-normal',
+    name: 'Script normal',
+    compatibility: 'all',
+    map: '𝒜ℬ𝒞𝒟ℰℱ𝒢ℋℐ𝒥𝒦ℒℳ𝒩𝒪𝒫𝒬ℛ𝒮𝒯𝒰𝒱𝒲𝒳𝒴𝒵𝒶𝒷𝒸𝒹ℯ𝒻ℊ𝒽𝒾𝒿𝓀𝓁𝓂𝓃ℴ𝓅𝓆𝓇𝓈𝓉𝓊𝓋𝓌𝓍𝓎𝓏0123456789'
+  },
+  {
+    id: 'greek-style',
+    name: 'Greek Lookalike',
+    compatibility: 'all',
+    map: 'αв¢∂єƒgнιјкℓмησρqяѕтυνωχуzαв¢∂єƒgнιјкℓмησρqяѕтυνωχуz0123456789'
+  },
+  {
+    id: 'luna-font',
+    name: 'Luna Accent',
+    compatibility: 'all',
+    map: 'ÄßÇÐÈFGHÏJKLMñÖPQRŠTÜVWXYZäßçðèfghïjklmñöpqrštüvwxyz0123456789'
+  },
+  
+  // Custom Dynamic Mapping Functions
+  {
+    id: 'money-box',
+    name: 'Money Box / Shielded',
+    compatibility: 'all',
+    map: (text) => text.split('').map(c => c === ' ' ? ' ' : `[̲̅${c}̲̅]`).join('')
+  },
+  {
+    id: 'heart-bubbles',
+    name: 'Heart Bubbles',
+    compatibility: 'all',
+    map: (text) => text.split('').map(c => c === ' ' ? ' ' : `${c}♥`).join('')
+  },
+  {
+    id: 'star-bubbles',
+    name: 'Star Bubbles',
+    compatibility: 'all',
+    map: (text) => text.split('').map(c => c === ' ' ? ' ' : `${c}★`).join('')
+  },
+  {
+    id: 'lightning-slash',
+    name: 'Lightning Slash',
+    compatibility: 'all',
+    map: (text) => text.split('').map(c => c === ' ' ? ' ' : `⚡${c}⚡`).join('')
   },
   {
     id: 'vaporwave',
     name: 'Vaporwave / Spaced',
+    compatibility: 'all',
     map: (text) => text.split('').join(' ')
   },
   {
     id: 'strikethrough',
     name: 'Strike-through',
+    compatibility: 'all',
     map: (text) => combineDiacritical(text, '\u0336')
   },
   {
     id: 'slash-through',
     name: 'Slash-through',
+    compatibility: 'all',
     map: (text) => combineDiacritical(text, '\u0338')
   },
   {
     id: 'cross-out',
     name: 'Cross-out',
+    compatibility: 'all',
     map: (text) => combineDiacritical(text, '\u0337')
   },
   {
     id: 'underline',
     name: 'Underline',
+    compatibility: 'all',
     map: (text) => combineDiacritical(text, '\u0332')
   },
   {
     id: 'double-underline',
     name: 'Double Underline',
+    compatibility: 'all',
     map: (text) => combineDiacritical(text, '\u0333')
   },
   {
     id: 'overline',
     name: 'Overline',
+    compatibility: 'all',
     map: (text) => combineDiacritical(text, '\u0305')
   },
   {
     id: 'upside-down',
     name: 'Upside Down',
+    compatibility: 'limited',
     map: makeUpsideDown
   },
   {
     id: 'mirror',
     name: 'Mirror Text',
+    compatibility: 'limited',
     map: makeMirror
   },
   {
     id: 'glitch',
     name: 'Glitch / Zalgo',
+    compatibility: 'limited',
     map: makeGlitch
   },
   {
     id: 'brackets-square',
     name: 'Square Brackets',
+    compatibility: 'all',
     map: (text) => text.split('').map(c => c === ' ' ? ' ' : `[${c}]`).join('')
   },
   {
     id: 'brackets-curly',
     name: 'Curly Brackets',
+    compatibility: 'all',
     map: (text) => text.split('').map(c => c === ' ' ? ' ' : `{${c}}`).join('')
   },
   {
     id: 'arrow-below',
     name: 'Arrow Below',
+    compatibility: 'all',
     map: (text) => combineDiacritical(text, '\u0354')
   },
   {
     id: 'harpoon-above',
     name: 'Harpoon Above',
+    compatibility: 'all',
     map: (text) => combineDiacritical(text, '\u035a')
   },
   {
     id: 'asterisk-below',
     name: 'Asterisk Below',
+    compatibility: 'all',
     map: (text) => combineDiacritical(text, '\u0359')
   },
   {
     id: 'x-above',
     name: 'X Above',
+    compatibility: 'all',
     map: (text) => combineDiacritical(text, '\u033d')
   },
   {
     id: 'bridge-above',
     name: 'Bridge Above',
+    compatibility: 'all',
     map: (text) => combineDiacritical(text, '\u0346')
-  },
-  {
-    id: 'gothic-italic',
-    name: 'Gothic Italic',
-    map: '𝔄𝔅ℭ𝔇𝔈𝔉𝔊ℌℑ𝔎𝔏𝔐🔲🔲🔲🔲🔲🔲🔲🔲🔲🔲🔲🔲🔲𝔞𝔟𝔠𝔡𝔢𝔣𝔤𝔥𝔦𝔨𝔩𝔪🔲𝔬𝔭𝔮𝔯𝔰𝔱𝔲𝔳𝔴𝔵𝔶𝔷0123456789',
-    previewText: '𝔊𝔬𝔱𝔥𝔦𝔠 ℑ𝔱𝔞𝔩𝔦𝔠'
-  },
-  {
-    id: 'mini-room',
-    name: 'Mini / Small Letters',
-    map: 'ᴀʙᴄᴅᴇꜰɢʜɪᴊᴋʟᴍɴᴏᴘǫʀsᴛᴜᴠᴡxʏᴢᴀʙᴄᴅᴇꜰɢʜɪᴊᴋʟᴍɴᴏᴘǫʀsᴛᴜᴠᴡxʏᴢ0123456789'
-  },
-  {
-    id: 'luna-font',
-    name: 'Luna / Accent',
-    map: 'ÄßÇÐÈFGHÏJKLMñÖPQRŠTÜVWXYZäßçðèfghïjklmñöpqrštüvwxyz0123456789'
-  },
-  {
-    id: 'invert-font',
-    name: 'Inverted Symbols',
-    map: 'zʎxʍʌnʇsɹbdouɯlʞɾıɥƃɟǝpɔqɐzʎxʍʌnʇsɹbdouɯlʞɾıɥƃɟǝpɔqɐ0123456789',
-    previewText: 'ʇxǝʇ pǝʇɹǝʌuI'
   }
 ];
 

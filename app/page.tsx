@@ -46,7 +46,7 @@ export default function HomePage() {
               <span className="text-[10px] font-bold text-slate-400 uppercase">Limit: 12 Chars</span>
             </div>
             
-            <h2 className="text-xl font-black uppercase text-slate-850 dark:text-slate-100 group-hover:text-orange-500 transition-colors">
+            <h2 className="text-xl font-black uppercase text-slate-800 dark:text-slate-100 group-hover:text-orange-500 transition-colors">
               FF Nickname Studio
             </h2>
             
@@ -55,7 +55,7 @@ export default function HomePage() {
             </p>
           </div>
           
-          <div className="flex items-center text-xs font-black uppercase tracking-widest text-orange-500 group-hover:translate-x-1 transition-transform pt-4 border-t border-slate-100 dark:border-slate-850">
+          <div className="flex items-center text-xs font-black uppercase tracking-widest text-orange-500 group-hover:translate-x-1 transition-transform pt-4 border-t border-slate-100 dark:border-slate-800">
             <span>ENTER FF STUDIO &rarr;</span>
           </div>
         </Link>
@@ -75,7 +75,7 @@ export default function HomePage() {
               <span className="text-[10px] font-bold text-slate-400 uppercase">Limit: 14 Chars</span>
             </div>
             
-            <h2 className="text-xl font-black uppercase text-slate-855 dark:text-slate-100 group-hover:text-amber-500 transition-colors">
+            <h2 className="text-xl font-black uppercase text-slate-800 dark:text-slate-100 group-hover:text-amber-500 transition-colors">
               BGMI Nickname Studio
             </h2>
             
@@ -84,7 +84,7 @@ export default function HomePage() {
             </p>
           </div>
           
-          <div className="flex items-center text-xs font-black uppercase tracking-widest text-amber-500 group-hover:translate-x-1 transition-transform pt-4 border-t border-slate-100 dark:border-slate-850">
+          <div className="flex items-center text-xs font-black uppercase tracking-widest text-amber-500 group-hover:translate-x-1 transition-transform pt-4 border-t border-slate-100 dark:border-slate-800">
             <span>ENTER BGMI STUDIO &rarr;</span>
           </div>
         </Link>

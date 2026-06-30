@@ -41,7 +41,7 @@ export default function InvisibleTextPage() {
           <p>
             When you type a name change card in games like Free Fire, the server filters out normal spaces (`0x0020` in hexadecimal representation) using simple code commands like `.trim()` or regular expressions. However, because U+3164 is categorized as a letter, the server accepts it as a normal character, allowing you to create names like:
           </p>
-          <div className="text-center py-2 font-mono bg-slate-50 dark:bg-slate-950 border border-slate-150 dark:border-slate-850 rounded-xl max-w-sm mx-auto my-2 text-violet-600 dark:text-violet-400 font-bold">
+          <div className="text-center py-2 font-mono bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl max-w-sm mx-auto my-2 text-violet-600 dark:text-violet-400 font-bold">
             ⚔️ KINGㅤBOY ⚔️
           </div>
           <p>

@@ -188,7 +188,7 @@ export default function Generator({ gameLimit, gameName, theme = 'purple' }: Gen
               value={inputText}
               onChange={(e) => setInputText(e.target.value)}
               placeholder="Enter text..."
-              className={`w-full rounded-2xl border border-slate-200/80 bg-slate-50/50 px-5 py-4 text-xl font-black text-slate-850 placeholder-slate-400 outline-none transition-all dark:border-slate-800 dark:bg-slate-950/60 dark:text-slate-100 dark:placeholder-slate-500 ${getThemeInputStyles()}`}
+              className={`w-full rounded-2xl border border-slate-200/80 bg-slate-50/50 px-5 py-4 text-xl font-black text-slate-800 placeholder-slate-400 outline-none transition-all dark:border-slate-800 dark:bg-slate-950/60 dark:text-slate-100 dark:placeholder-slate-500 ${getThemeInputStyles()}`}
               maxLength={40}
             />
             {inputText && (
@@ -219,7 +219,7 @@ export default function Generator({ gameLimit, gameName, theme = 'purple' }: Gen
                       cx="22"
                       cy="22"
                       r={radius}
-                      className="stroke-slate-200 dark:stroke-slate-850"
+                      className="stroke-slate-200 dark:stroke-slate-800"
                       strokeWidth="3.5"
                       fill="transparent"
                     />
@@ -289,7 +289,7 @@ export default function Generator({ gameLimit, gameName, theme = 'purple' }: Gen
             className={`flex-shrink-0 rounded-2xl px-5 py-3 text-xs font-bold border transition-all ${
               selectedPreset === null
                 ? 'border-violet-500 bg-violet-50/50 text-violet-600 dark:bg-violet-950/20 dark:text-violet-400'
-                : 'border-slate-200 bg-white text-slate-600 hover:border-slate-300 dark:border-slate-850 dark:bg-slate-900 dark:text-slate-400 dark:hover:border-slate-800'
+                : 'border-slate-200 bg-white text-slate-600 hover:border-slate-300 dark:border-slate-800 dark:bg-slate-900 dark:text-slate-400 dark:hover:border-slate-800'
             }`}
           >
             Plain (No Banner)
@@ -305,7 +305,7 @@ export default function Generator({ gameLimit, gameName, theme = 'purple' }: Gen
                 className={`flex-shrink-0 rounded-2xl px-5 py-3 text-xs font-bold border transition-all ${
                   isSelected
                     ? 'border-violet-500 bg-violet-50/50 text-violet-600 dark:bg-violet-950/20 dark:text-violet-400 shadow-md shadow-violet-500/5'
-                    : 'border-slate-200 bg-white text-slate-700 hover:border-slate-350 dark:border-slate-850 dark:bg-slate-900 dark:text-slate-300 dark:hover:border-slate-800'
+                    : 'border-slate-200 bg-white text-slate-700 hover:border-slate-350 dark:border-slate-800 dark:bg-slate-900 dark:text-slate-300 dark:hover:border-slate-800'
                 }`}
               >
                 <span className="block font-bold mb-0.5 text-slate-400 dark:text-slate-500 text-[9px] uppercase text-left">{preset.name}</span>
@@ -336,10 +336,21 @@ export default function Generator({ gameLimit, gameName, theme = 'purple' }: Gen
                 key={style.id}
                 className={`gaming-card rounded-2xl p-5 flex flex-col justify-between hover:scale-[1.01] ${getThemeCardHover()}`}
               >
-                <div className="flex items-center justify-between border-b border-slate-100 pb-3 dark:border-slate-850">
-                  <span className="text-xs font-black text-slate-400 dark:text-slate-500 uppercase tracking-wider">
-                    {style.name}
-                  </span>
+                <div className="flex items-center justify-between border-b border-slate-100 pb-3 dark:border-slate-800">
+                  <div className="flex flex-wrap items-center gap-1.5">
+                    <span className="text-xs font-black text-slate-650 dark:text-slate-400 uppercase tracking-wider">
+                      {style.name}
+                    </span>
+                    {style.compatibility === 'all' ? (
+                      <span className="inline-flex items-center rounded bg-emerald-500/10 px-1 py-0.5 text-[8px] font-black uppercase tracking-wider text-emerald-500" title="100% Compatible with Free Fire and BGMI name fields">
+                        ✓ FF & BGMI
+                      </span>
+                    ) : (
+                      <span className="inline-flex items-center rounded bg-amber-500/10 px-1 py-0.5 text-[8px] font-black uppercase tracking-wider text-amber-500" title="Limited in-game compatibility. Recommended to test first in lobby chat.">
+                        ⚠️ Lobby Test
+                      </span>
+                    )}
+                  </div>
                   
                   {/* Share button links */}
                   <div className="flex space-x-2">
@@ -365,7 +376,7 @@ export default function Generator({ gameLimit, gameName, theme = 'purple' }: Gen
                 </div>
 
                 <div className="my-4 flex items-center justify-between gap-4">
-                  <div className="overflow-x-auto select-all py-1.5 pr-2 font-mono text-xl font-bold text-slate-850 dark:text-slate-100 scrollbar-none whitespace-nowrap max-w-[70%]">
+                  <div className="overflow-x-auto select-all py-1.5 pr-2 font-mono text-xl font-bold text-slate-800 dark:text-slate-100 scrollbar-none whitespace-nowrap max-w-[70%]">
                     {finalWord || <span className="text-slate-300 dark:text-slate-800 italic">Empty</span>}
                   </div>
                   
@@ -394,7 +405,7 @@ export default function Generator({ gameLimit, gameName, theme = 'purple' }: Gen
         <div className="space-y-6">
           <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
             <div>
-              <h3 className="text-base font-black text-slate-850 dark:text-slate-100 flex items-center space-x-1.5">
+              <h3 className="text-base font-black text-slate-800 dark:text-slate-100 flex items-center space-x-1.5">
                 <span>✨ DECORATIVE TEXT ART LIBRARY</span>
               </h3>
               <p className="text-xs text-slate-400 dark:text-slate-500">
@@ -427,7 +438,7 @@ export default function Generator({ gameLimit, gameName, theme = 'purple' }: Gen
                 return (
                   <div
                     key={index}
-                    className="flex flex-col justify-between rounded-xl border border-slate-200 bg-white dark:border-slate-850 dark:bg-slate-900/50 p-4 transition-all hover:border-slate-350 dark:hover:border-slate-800"
+                    className="flex flex-col justify-between rounded-xl border border-slate-200 bg-white dark:border-slate-800 dark:bg-slate-900/50 p-4 transition-all hover:border-slate-350 dark:hover:border-slate-800"
                   >
                     <div className="font-mono text-sm font-semibold select-all text-slate-700 dark:text-slate-300 py-3 text-center overflow-x-auto scrollbar-none whitespace-nowrap">
                       {combinedArt}

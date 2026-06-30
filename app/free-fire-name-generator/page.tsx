@@ -122,7 +122,7 @@ export default function FreeFireNameGeneratorPage() {
         
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
           <div className="gaming-card rounded-2xl p-5 space-y-2">
-            <h3 className="font-extrabold text-slate-850 dark:text-slate-100 uppercase tracking-wide text-xs">
+            <h3 className="font-extrabold text-slate-800 dark:text-slate-100 uppercase tracking-wide text-xs">
               Why did my Free Fire name get truncated?
             </h3>
             <p className="text-slate-550 dark:text-slate-400 leading-relaxed text-xs">
@@ -131,7 +131,7 @@ export default function FreeFireNameGeneratorPage() {
           </div>
 
           <div className="gaming-card rounded-2xl p-5 space-y-2">
-            <h3 className="font-extrabold text-slate-855 dark:text-slate-100 uppercase tracking-wide text-xs">
+            <h3 className="font-extrabold text-slate-800 dark:text-slate-100 uppercase tracking-wide text-xs">
               Can I use emojis in my Free Fire username?
             </h3>
             <p className="text-slate-500 dark:text-slate-400 leading-relaxed text-xs">

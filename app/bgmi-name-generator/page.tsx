@@ -73,7 +73,7 @@ export default function BgmiNameGeneratorPage() {
 
       {/* Paste Instructions */}
       <section className="gaming-card rounded-3xl p-6 md:p-8 mb-14 space-y-6 relative z-10">
-        <h2 className="text-base font-black uppercase tracking-widest text-slate-850 dark:text-slate-100 flex items-center space-x-2">
+        <h2 className="text-base font-black uppercase tracking-widest text-slate-800 dark:text-slate-100 flex items-center space-x-2">
           <span>📋 HOW TO USE RENAME CARD IN BGMI</span>
         </h2>
         
@@ -122,7 +122,7 @@ export default function BgmiNameGeneratorPage() {
         
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
           <div className="gaming-card rounded-2xl p-5 space-y-2">
-            <h3 className="font-extrabold text-slate-850 dark:text-slate-100 uppercase tracking-wide text-xs">
+            <h3 className="font-extrabold text-slate-800 dark:text-slate-100 uppercase tracking-wide text-xs">
               Why does my name change say "Name already taken"?
             </h3>
             <p className="text-slate-550 dark:text-slate-400 leading-relaxed text-xs">
@@ -131,7 +131,7 @@ export default function BgmiNameGeneratorPage() {
           </div>
 
           <div className="gaming-card rounded-2xl p-5 space-y-2">
-            <h3 className="font-extrabold text-slate-855 dark:text-slate-100 uppercase tracking-wide text-xs">
+            <h3 className="font-extrabold text-slate-800 dark:text-slate-100 uppercase tracking-wide text-xs">
               Which special characters are supported by BGMI?
             </h3>
             <p className="text-slate-500 dark:text-slate-400 leading-relaxed text-xs">

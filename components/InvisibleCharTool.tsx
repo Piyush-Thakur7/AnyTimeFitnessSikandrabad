@@ -82,7 +82,7 @@ export default function InvisibleCharTool() {
       {/* Explainer Section */}
       <div className="gaming-card rounded-3xl p-6 relative overflow-hidden">
         <div className="absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-cyan-500 to-blue-500" />
-        <h2 className="text-lg font-black text-slate-850 dark:text-slate-100 mb-4 flex items-center space-x-2">
+        <h2 className="text-lg font-black text-slate-800 dark:text-slate-100 mb-4 flex items-center space-x-2">
           <span>❓ WHY DO MOBILE GAMES BLOCK STANDARD SPACES?</span>
         </h2>
         <div className="text-sm text-slate-500 dark:text-slate-400 space-y-3 leading-relaxed">
@@ -198,7 +198,7 @@ export default function InvisibleCharTool() {
                     <h3 className="text-base font-black text-slate-800 dark:text-slate-100">
                       {char.name}
                     </h3>
-                    <span className="rounded-lg bg-slate-100 px-2 py-0.5 font-mono text-xs font-bold text-slate-650 dark:bg-slate-850 dark:text-slate-400">
+                    <span className="rounded-lg bg-slate-100 px-2 py-0.5 font-mono text-xs font-bold text-slate-650 dark:bg-slate-800 dark:text-slate-400">
                       {char.unicode}
                     </span>
                   </div>
@@ -208,7 +208,7 @@ export default function InvisibleCharTool() {
                   </p>
 
                   {/* Compatibility notes table */}
-                  <div className="grid grid-cols-2 gap-4 pt-3 border-t border-slate-100 dark:border-slate-850 text-xs">
+                  <div className="grid grid-cols-2 gap-4 pt-3 border-t border-slate-100 dark:border-slate-800 text-xs">
                     <div>
                       <span className="block font-black text-orange-500 uppercase tracking-widest text-[9px] mb-0.5">Free Fire Compatibility</span>
                       <span className="text-slate-500 dark:text-slate-400 leading-normal">{char.ffCompatibility}</span>
@@ -221,7 +221,7 @@ export default function InvisibleCharTool() {
                 </div>
 
                 <div className="flex flex-col space-y-2 justify-center items-stretch md:w-44 flex-shrink-0">
-                  <div className="rounded-xl border border-dashed border-slate-200 dark:border-slate-850 p-2 text-center text-xs font-mono text-slate-400 bg-slate-50/50 dark:bg-slate-950/40">
+                  <div className="rounded-xl border border-dashed border-slate-200 dark:border-slate-800 p-2 text-center text-xs font-mono text-slate-400 bg-slate-50/50 dark:bg-slate-950/40">
                     Display: <span className="font-bold text-slate-800 dark:text-white bg-slate-200/50 dark:bg-slate-800 rounded px-1.5 py-0.5">{char.char}</span>
                   </div>
 
