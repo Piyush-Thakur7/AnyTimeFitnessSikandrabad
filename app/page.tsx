@@ -235,7 +235,7 @@ export default function GymHomePage() {
       {/* 1. HERO SECTION */}
       <section 
         id="home" 
-        className="relative h-screen flex items-center justify-center overflow-hidden"
+        className="relative min-h-screen md:h-screen flex items-center justify-center py-24 md:py-0 overflow-hidden"
       >
         {/* Background Image with Dark Cinematic Overlay */}
         <div className="absolute inset-0 z-0">
@@ -259,7 +259,7 @@ export default function GymHomePage() {
             <span>Now Open in Sikandrabad</span>
           </div>
 
-          <h1 className="font-bebas text-5xl sm:text-7xl md:text-8xl lg:text-9xl tracking-tight leading-none text-white max-w-5xl mb-6">
+          <h1 className="font-bebas text-4xl min-col-[400px]:text-5xl min-[400px]:text-5xl sm:text-7xl md:text-8xl lg:text-9xl tracking-tight leading-none text-white max-w-5xl mb-6">
             YOUR TRANSFORMATION <br />
             <span className="text-accent drop-shadow-[0_0_15px_rgba(225,29,46,0.3)]">STARTS HERE</span>
           </h1>
@@ -287,20 +287,20 @@ export default function GymHomePage() {
           </div>
 
           {/* Stat Strip Below Fold */}
-          <div className="absolute bottom-12 left-0 right-0 w-full">
+          <div className="w-full mt-16 md:mt-0 md:absolute md:bottom-12 md:left-0 md:right-0">
             <div className="max-w-4xl mx-auto px-4">
-              <div className="border-y border-neutral-900 bg-black/60 backdrop-blur-md py-4 grid grid-cols-3 gap-4 text-center">
+              <div className="border-y border-neutral-900 bg-black/60 backdrop-blur-md py-4 grid grid-cols-3 gap-2 py-3 px-2 md:gap-4 md:py-4 text-center">
                 <div>
-                  <p className="text-accent font-bebas text-2xl sm:text-3xl tracking-wider font-bold">5.0 ★★★★★</p>
-                  <p className="text-xs sm:text-sm text-neutral-400 font-semibold uppercase tracking-wider">Rated Reviews</p>
+                  <p className="text-accent font-bebas text-lg min-[380px]:text-2xl sm:text-3xl tracking-wider font-bold">5.0 ★★★★★</p>
+                  <p className="text-[9px] min-[380px]:text-xs sm:text-sm text-neutral-400 font-semibold uppercase tracking-wider">Rated Reviews</p>
                 </div>
                 <div className="border-x border-neutral-900">
-                  <p className="text-white font-bebas text-2xl sm:text-3xl tracking-wider font-bold">EXPERT COACHES</p>
-                  <p className="text-xs sm:text-sm text-neutral-400 font-semibold uppercase tracking-wider">Certified Team</p>
+                  <p className="text-white font-bebas text-lg min-[380px]:text-2xl sm:text-3xl tracking-wider font-bold">EXPERT COACHES</p>
+                  <p className="text-[9px] min-[380px]:text-xs sm:text-sm text-neutral-400 font-semibold uppercase tracking-wider">Certified Team</p>
                 </div>
                 <div>
-                  <p className="text-white font-bebas text-2xl sm:text-3xl tracking-wider font-bold">SIKANDRABAD</p>
-                  <p className="text-xs sm:text-sm text-neutral-400 font-semibold uppercase tracking-wider">Bulandshahr, UP</p>
+                  <p className="text-white font-bebas text-lg min-[380px]:text-2xl sm:text-3xl tracking-wider font-bold">SIKANDRABAD</p>
+                  <p className="text-[9px] min-[380px]:text-xs sm:text-sm text-neutral-400 font-semibold uppercase tracking-wider">Bulandshahr, UP</p>
                 </div>
               </div>
             </div>

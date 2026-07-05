@@ -57,8 +57,8 @@ export default function Navbar() {
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 flex items-center justify-between">
         {/* Logo Text & Image */}
         <a href="#home" onClick={(e) => handleScrollTo(e, '#home')} className="flex items-center space-x-2">
-          <Logo className="h-10 sm:h-12 md:h-14 w-auto" />
-          <span className="font-bebas text-xl sm:text-2xl tracking-widest text-white font-bold hover:text-accent transition-colors">
+          <Logo className="h-9 sm:h-12 md:h-14 w-auto" />
+          <span className="font-bebas text-base min-[380px]:text-xl sm:text-2xl tracking-wider min-[380px]:tracking-widest text-white font-bold hover:text-accent transition-colors">
             ANYTIME FITNESS
           </span>
         </a>
